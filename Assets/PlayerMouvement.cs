@@ -12,7 +12,7 @@ public class PlayerMouvement : MonoBehaviour
     //FPS
     public GameObject canvas;
 
-    private Vector3 speedDirection;
+    public Vector3 speedDirection;
     public float speed;
     private float initSpeed;
 
@@ -20,6 +20,9 @@ public class PlayerMouvement : MonoBehaviour
     private Vector3 normal;
     private int numcontact;
     Rigidbody rb;
+
+    //Movement control
+    public bool autoMovement = true;
 
     void Awake()
     {
@@ -61,6 +64,11 @@ public class PlayerMouvement : MonoBehaviour
 
         normal.Normalize();
 
+        //AutoMovement
+        if (!autoMovement)
+        {
+            speedDirection *= 0;
+        }
 
         ProcessInputs();
 
@@ -73,6 +81,7 @@ public class PlayerMouvement : MonoBehaviour
         //Give speed
         rb.velocity = speedDirection * speed;
 
+        Debug.DrawRay(this.transform.position, speedDirection, Color.green); //Tracé speedDirection
     }
 
     void ProcessInputs()
@@ -104,6 +113,14 @@ public class PlayerMouvement : MonoBehaviour
             canvas.SetActive(true);
         }
         else { canvas.SetActive(false); }
+
+        //Stop Auto movement
+        if (OVRInput.Get(OVRInput.RawButton.X))
+        {
+            if (autoMovement) { autoMovement = false; }
+            else { autoMovement = true; }
+        }
+        
 
     }
 }

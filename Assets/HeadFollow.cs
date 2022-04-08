@@ -9,9 +9,11 @@ public class HeadFollow : MonoBehaviour
 
     public float smooth;
 
+    //private PlayerMouvement vectordirection;
+
     void Start()
     {
-        //vectordirection = body.GetComponent<ProcessGravity>();
+        //vectordirection = body.GetComponent<PlayerMouvement>();
 
     }
 
@@ -29,10 +31,16 @@ public class HeadFollow : MonoBehaviour
         //CameraRig follow rayon
 
         transform.rotation = Quaternion.FromToRotation(transform.up, rayon) * transform.rotation;
+       
+        //-----------make forward align with speedDirection-----------------------------
+       //too dizzy
 
-        //Camera follow forwward direction : useless
-        //transform.rotation = Quaternion.FromToRotation(transform.forward, -Vector3.Cross(rayon, transform.right)) * transform.rotation;
-
+        //Quaternion rotation = Quaternion.LookRotation(vectordirection.speedDirection, transform.up);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.time * smooth/100);
     }
+    //Camera follow forwward direction : useless
+    //transform.rotation = Quaternion.FromToRotation(transform.forward, -Vector3.Cross(rayon, transform.right)) * transform.rotation;
+
+
 }
 
